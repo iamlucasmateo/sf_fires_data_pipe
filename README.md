@@ -17,9 +17,9 @@ After gaining an understanding of the data, the behavior of the API, and the req
 - I tried to leave the requirements as light as possible. Boto3 is the most used library; pandas is used as well.
 - The code base contains additional developments (for example, a pipelne for AWS RDS - MySQL, which doesn't use S3 at all). These were part of the discovery process but were finally discarded in the deployment to AWS.
 
-### Data Warehouse access
+### Questions / Data Warehouse access
 
-In order to obtain credentials for querying the Data Warehouse, you can send me an email.
+In order ask me any questions or to obtain credentials for querying the Data Warehouse, you can send me an email.
 
 ### Nice to haves
 
