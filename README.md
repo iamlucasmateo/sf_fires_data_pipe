@@ -27,6 +27,7 @@ Credentials for accessing the Redshift cluster:
 - table: sf_fires
 - user: awsuser
 - password: ????? 
+
 To obtain the password for querying the Data Warehouse, you can send me an email.
 
 Of course, I could make a walkthrough of what things look like in AWS (configurations, Lambda, CloudWatch, Redshift)
