@@ -17,9 +17,17 @@ After gaining an understanding of the data, the behavior of the API, and the req
 - I tried to leave the requirements as light as possible. Boto3 is the most used library; pandas is used as well.
 - The code base contains additional developments (for example, a pipelne for AWS RDS - MySQL, which doesn't use S3 at all). These were part of the discovery process but were finally discarded in the deployment to AWS.
 
-### Questions / Data Warehouse access
+### How to use the Data Warehouse
 
-In order ask me any questions or to obtain credentials for querying the Data Warehouse, you can send me an email.
+The Data Warehouse can be accessed through the use of credentials, be that through a GUI client (Workbench, DBeaver) or through a library (e.g., boto3).
+Credentials for accessing the Redshift cluster: 
+- cluster_name: redshift-cluster-1
+- database: dev
+- schema: sf_fires
+- table: sf_fires
+- user: awsuser
+- password: ????? 
+To obtain the password for querying the Data Warehouse, you can send me an email.
 
 ### Nice to haves
 
