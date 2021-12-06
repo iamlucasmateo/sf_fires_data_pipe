@@ -4,7 +4,7 @@ This repository contains the data analysis and code implementation required to b
 
 ### Repository Structure
 
-The Exploration folders contains Jupyter notebooks with the analysis of the data and the API requirements, necessary for a correct posterior implementation. I've also used that space to try different ideas for the actual coding. The App folder contains a complete implementation of the pipeline. The final deploymen, as explained below, made heavy use of AWS (which seemed to most sensible approach, given what the job description was asking for).
+The Exploration folder contains Jupyter notebooks that include an analysis of the data and the API requirements, which proved quite necessary for a correct posterior implementation. I've also used that the notebooks to try and sketch different ideas before the actual coding. On the other hand, the App folder contains a complete implementation of the pipeline. The final deployment, as explained below, makes heavy use of AWS (which seemed to most sensible approach, given what the job description was asking for).
 
 ### The pipeline, in a nutshell
 
@@ -29,6 +29,8 @@ Credentials for accessing the Redshift cluster:
 - password: ????? 
 To obtain the password for querying the Data Warehouse, you can send me an email.
 
+Of course, I could make a walkthrough of what things look like in AWS (configurations, Lambda, CloudWatch, Redshift)
+
 ### Nice to haves
 
-Due to time constraints, many ideas that I think could improve the solution were discarded: providing a front to show the queries, benchmarking different sorting and distribution possibilities, creating a dashboard, etc.
+Due to time constraints, many ideas that I think could improve the solution were discarded: providing a front to show the queries, benchmarking different sorting and distribution possibilities, creating a backup and considering an strategy for downtime, creating a dashboard, etc.
