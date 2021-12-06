@@ -1,0 +1,4 @@
+requests
+pandas
+redshift_connector
+boto3
