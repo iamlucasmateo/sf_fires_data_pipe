@@ -4,7 +4,7 @@ This repository contains the data analysis and code implementation required to b
 
 ### Repository Structure
 
-The Exploration folder contains Jupyter notebooks that include an analysis of the data and the API requirements, which proved quite necessary for a correct posterior implementation. I've also used that the notebooks to try and sketch different ideas before the actual coding. On the other hand, the App folder contains a complete implementation of the pipeline. The final deployment, as explained below, makes heavy use of AWS (which seemed to most sensible approach, given what the job description was asking for). The folder AWS Screenshots shows some examples of the AWS Services in use.
+The Exploration folder contains Jupyter notebooks that include an analysis of the data and the API requirements, which proved quite necessary for a correct posterior implementation. I've also used the notebooks to try and sketch different ideas before the actual coding. On the other hand, the App folder contains a complete implementation of the pipeline. The final deployment, as explained below, makes heavy use of AWS (which seemed the most sensible approach, given what the job description was asking for). The folder AWS Screenshots shows some examples of the AWS Services in use.
 
 ### The pipeline, in a nutshell
 
