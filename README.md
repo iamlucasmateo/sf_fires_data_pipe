@@ -4,7 +4,7 @@ This repository contains the data analysis and code implementation required to b
 
 ### Repository Structure
 
-The Exploration folder contains Jupyter notebooks that include an analysis of the data and the API requirements, which proved quite necessary for a correct posterior implementation. I've also used that the notebooks to try and sketch different ideas before the actual coding. On the other hand, the App folder contains a complete implementation of the pipeline. The final deployment, as explained below, makes heavy use of AWS (which seemed to most sensible approach, given what the job description was asking for).
+The Exploration folder contains Jupyter notebooks that include an analysis of the data and the API requirements, which proved quite necessary for a correct posterior implementation. I've also used that the notebooks to try and sketch different ideas before the actual coding. On the other hand, the App folder contains a complete implementation of the pipeline. The final deployment, as explained below, makes heavy use of AWS (which seemed to most sensible approach, given what the job description was asking for). The folder AWS Screenshots shows some examples of the AWS Services in use.
 
 ### The pipeline, in a nutshell
 
@@ -16,6 +16,7 @@ After gaining an understanding of the data, the behavior of the API, and the req
 - In order to orchestrate the daily run of the pipeline, an instance of AWS Lambda is triggered through AWS EventWatcher. This run is monitored in AWS CloudWatch. 
 - I tried to leave the requirements as light as possible. Boto3 is the most used library; pandas is used as well.
 - The code base contains additional developments (for example, a pipelne for AWS RDS - MySQL, which doesn't use S3 at all). These were part of the discovery process but were finally discarded in the deployment to AWS.
+- Some screenshots of the AWS services involved can be seen on the AWS Screenshts folder
 
 ### How to use the Data Warehouse
 
