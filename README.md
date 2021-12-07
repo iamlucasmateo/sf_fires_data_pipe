@@ -8,15 +8,16 @@ The Exploration folder contains Jupyter notebooks that include an analysis of th
 
 ### The pipeline, in a nutshell
 
-After gaining an understanding of the data, the behavior of the API, and the requirements of the challenge, the data pipeline that I constructed runs as follows:
-- Every day (as per the requirements), the Socrata API is called, with the very specific SoQL syntax needed to pull the whole dataset (which was explored during the first part of the development).
-- The data is mildly processed in pandas and loaded into AWS S3, as a .csv. The only column that was actually changed was the "point" column, the key of which contained a nested js object / python dictionary as a value. The data inside this key was broken down into latitude and longitude, values which allow for much more useful analysis (e.g., they could be used to create a heatmap).
-- The .csv from S3 if loaded into AWS Redshift, the chosen Data Warehousing solution for this challenge. This is done using connecting boto3 to the Redshift Data API. Other options were explored (redshift_connector, AWS Glue), but finally discarded. 
+After gaining an understanding of the data, the behavior of the API, and the requirements of the challenge, the data pipeline that I constructed (App/app.py) runs as follows:
+- Every day (as per the requirements), the Socrata API is called, with the very specific SoQL syntax needed to pull the whole dataset (the format for this API call was explored in the notebooks).
+- Once the JSON is received, the data is mildly processed in pandas and loaded into AWS S3, as a .csv. The only column that was actually changed was the "point" column, the key of which contained a nested js object as a value. The data inside this key was broken down into latitude and longitude, values which allow for much more useful analysis (e.g., they could be used to create a heatmap).
+- The .csv from S3 if loaded into AWS Redshift, the chosen Data Warehousing solution for this challenge. This is done using boto3 to connect to the Redshift Data API. Other options were explored (redshift_connector, AWS Glue), but finally discarded. 
 - The table in Redshift was built considering the requirements (i.e., the columns that will be frequently queried and aggregated by the Business Intelligence area), through the use of sort and distribution keys.
 - In order to orchestrate the daily run of the pipeline, an instance of AWS Lambda is triggered through AWS EventWatcher. This run is monitored in AWS CloudWatch. 
 - I tried to leave the requirements as light as possible. Boto3 is the most used library; pandas is used as well.
-- The code base contains additional developments (for example, a pipelne for AWS RDS - MySQL, which doesn't use S3 at all). These were part of the discovery process but were finally discarded in the deployment to AWS.
+- The codebase contains additional developments (for example, a pipelne for AWS RDS - MySQL, which doesn't use S3 at all). These were part of the discovery process but were finally discarded in the deployment to AWS.
 - Some screenshots of the AWS services involved can be seen on the AWS Screenshots folder
+- Other architectures were explored but this one emerged as the most natural one for the task at hand, using AWS Services.
 
 ### How to use the Data Warehouse
 
