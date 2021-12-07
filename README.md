@@ -37,4 +37,4 @@ Of course, I could make a walkthrough of what things look like in AWS (configura
 
 ### Nice to haves
 
-Due to time constraints, many ideas that I think could improve the solution were discarded: providing a front to show the queries, benchmarking different sorting and distribution possibilities, creating a backup and considering an strategy for downtime, creating a dashboard, etc.
+Due to time constraints, many ideas that I think could improve the solution were discarded: providing a front to show the queries, benchmarking different sorting and distribution possibilities, creating a backup and considering an strategy for downtime, creating a dashboard, monitoring the solution, etc.
