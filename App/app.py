@@ -35,7 +35,9 @@ if __name__ == "__main__":
     filepath = "data/sf_fires.csv"
     backup_path = "data/sf_fires_"
     backup_path += f"{now.year}-{now.month}-{now.day}:{now.hour}H:{now.minute}M.csv" 
+    
     print(f"Handler instantiated, backup filepath {filepath}")
+    
     handler.upload_dataframe(df, filepath, backup_path=backup_path)
 
     print("File uploaded")
@@ -50,8 +52,9 @@ if __name__ == "__main__":
     uploader = RedshiftBotoUploader(cluster, region, ACCESS_KEY, 
                                     SECRET_KEY, rs_database, secret)
     
-    table = redshift_config["db.table"]
-    uploader.update(table, BUCKET, filepath)
+    table_prod = redshift_config["db.table_prod"]
+    table_dev = redshift_config["db.table_dev"]
+    uploader.update(table_prod, table_dev, BUCKET, filepath)
 
     print("Redshift table updated")
 

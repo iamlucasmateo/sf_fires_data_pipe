@@ -22,9 +22,9 @@ class RedshiftBotoUploader:
         self.database = database
         self.secret = secret
 
-    def _execute_sql(self, sql, name=None):
+    def _execute_sql(self, sql: str, name=""):
         with_event = True if name else False
-        self.client.execute_statement(
+        result = self.client.execute_statement(
             ClusterIdentifier=self.cluster,
             Database=self.database,
             SecretArn=self.secret,
@@ -32,16 +32,39 @@ class RedshiftBotoUploader:
             StatementName=name,
             WithEvent=with_event
         )
+        return result
+    
+    def _batch_execute_sql(self, sqls: list, name=""):
+        with_event = True if name else False
+        result = self.client.batch_execute_statement(
+            ClusterIdentifier=self.cluster,
+            Database=self.database,
+            SecretArn=self.secret,
+            Sqls=sqls,
+            StatementName=name,
+            WithEvent=with_event
+        )
+        return result
 
+    def _get_truncate_sql(self, table):
+        return f"TRUNCATE {table}"
+    
     def truncate(self, table):
-        sql = f"TRUNCATE {table}"
-        self._execute_sql(sql, name="sf_fires table reinitialized")
-
-    def upload(self, 
-               table:str, 
-               bucket:str, 
-               filepath:str):
-        sql = f"""
+        sql = self._get_truncate_sql(table)
+        self._execute_sql(sql, name=f"{table} table reinitialized")
+    
+    def _get_copy_sql(self, new_table, original_table):
+        return f"INSERT INTO {new_table} SELECT * FROM {original_table}"
+    
+    def copy(self, new_table, original_table):
+        sql = self._get_copy_sql(new_table, original_table)
+        self._execute_sql(sql, name=f"copies {new_table} from {original_table}")
+    
+    def _get_upload_sql(self, 
+                       table:str, 
+                       bucket:str, 
+                       filepath:str):
+        return f"""
         COPY {table} FROM 's3://{bucket}/{filepath}'
         access_key_id '{self.access_key}'
         secret_access_key '{self.secret_key}'
@@ -49,11 +72,25 @@ class RedshiftBotoUploader:
         TIMEFORMAT 'auto'
         acceptinvchars
         """
+
+    def upload_from_s3(self, 
+                       table:str, 
+                       bucket:str, 
+                       filepath:str):
+        sql = self._get_upload_sql(table, bucket, filepath)
         self._execute_sql(sql, name="sf_fires data uploaded")
     
     def update(self,
-               table: str,
+               table_prod: str,
+               table_dev: str,
                bucket: str,
                filepath:str):
-        self.truncate(table)
-        self.upload(table, bucket, filepath)
+        truncate_dev_sql = self._get_truncate_sql(table_dev)
+        upload_dev_sql = self._get_upload_sql(table_dev, bucket, filepath)
+        truncate_prod_sql = self._get_truncate_sql(table_prod)
+        copy_sql = self._get_copy_sql(table_prod, table_dev)
+        
+        sqls = [truncate_dev_sql, upload_dev_sql, 
+                    truncate_prod_sql, copy_sql]
+
+        self._batch_execute_sql(sqls, name="updated sf_fires tables")
