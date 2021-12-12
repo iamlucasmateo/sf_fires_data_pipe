@@ -21,11 +21,11 @@ if __name__ == "__main__":
     data_url = api_config["data_url"]
     retriever = FireDataGetter(data_url, dataset_id, api_token)
     data = retriever.get_all_data()
-    print("Data Retrieved")
+    print("Data Retrieved from Socrata API")
 
     # Data Processing
     df = DataProcessor(data).df
-    print("Data processed")
+    print("Data processed to load to S3")
 
     # Upload to S3
     ACCESS_KEY = s3_config["access_key"]
@@ -36,14 +36,13 @@ if __name__ == "__main__":
     backup_path = "data/sf_fires_"
     backup_path += f"{now.year}-{now.month}-{now.day}:{now.hour}H:{now.minute}M.csv" 
     
-    print(f"Handler instantiated, backup filepath {filepath}")
+    print(f"S3 Handler instantiated, backup filepath {filepath}")
     
     handler.upload_dataframe(df, filepath, backup_path=backup_path)
 
-    print("File uploaded")
+    print("File uploaded to S3, updating Redshift")
 
     # Load to Redshift
-    print("Updating Data Warehouse")
     
     region = redshift_config["region"]
     cluster = redshift_config["cluster"]
